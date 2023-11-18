@@ -1,6 +1,11 @@
 import numpy as np
 import math
 import argparse
+import os
+import subprocess
+
+
+command_gen_poscar = "ls -l"
 
 bohr_in_ang = 0.52917721067
 ang_in_bohr = 1.88972612546
@@ -19,12 +24,12 @@ class AtomNotFoundError(Exception):
     pass
 
 def read_contcar(filename):
-    with open(filename, "r") as infile:
-        file_content = infile.readlines()
-    file_body = [line for line in file_content if line.strip()]
-    return file_body
+    with open(filename, "r") as poscar_inp:
+        poscar_content = poscar_inp.readlines()
+    poscar_data = [line for line in poscar_content if line.strip()]
+    return poscar_data
 
-def calculate_kpoint_density(a_length):
+def calculate_kpoints_number(a_length):
     return math.ceil(kpoint_dense / a_length)
 
 def get_atom_index(atom_type):
@@ -45,9 +50,9 @@ def main():
     title = args.title
     n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
 
-    file_body = read_contcar(filename)
-    scale_factor = file_body[1]
-    lattice_parameters = [list(map(float, line.split())) for line in file_body[2:5]]
+    poscar_data = read_contcar(filename)
+    scale_factor = poscar_data[1]
+    lattice_parameters = [list(map(float, line.split())) for line in poscar_data[2:5]]
     a1x, a1y, a1z = lattice_parameters[0]
     a2x, a2y, a2z = lattice_parameters[1]
     a3x, a3y, a3z = lattice_parameters[2]
@@ -56,12 +61,12 @@ def main():
     a2_length = np.sqrt(a2x**2 + a2y**2 + a2z**2)
     a3_length = np.sqrt(a3x**2 + a3y**2 + a3z**2)
 
-    k1 = calculate_kpoint_density(a1_length)
-    k2 = calculate_kpoint_density(a2_length)
-    k3 = calculate_kpoint_density(a3_length)
+    k1 = calculate_kpoints_number(a1_length)
+    k2 = calculate_kpoints_number(a2_length)
+    k3 = calculate_kpoints_number(a3_length)
 
-    atom_type = file_body[5].split()
-    atom_numbers = list(map(int, file_body[6].split()))
+    atom_type = poscar_data[5].split()
+    atom_numbers = list(map(int, poscar_data[6].split()))
     lower_atom_type = [t.lower() for t in atom_type]
 
     total_atom_number = sum(atom_numbers)
@@ -71,13 +76,16 @@ def main():
         print(f"Atom Name: {type}, Atom Number: {number}, Atom Index: {index}")
 
     if n_type == 1:
-        generate_supercell_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+        generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                                  total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3)
     else:
-        generate_film_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+        generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                              total_atom_number, atom_type, atom_numbers, atom_index, k1, k2)
 
-def generate_supercell_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+output_filename1 = "inp_sup"
+output_filename2 = "inp_film"
+
+def generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                              total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3):
     with open("inp_sup", "w") as outfile:
         outfile.write("{:s}\n".format(filename))
@@ -92,7 +100,7 @@ def generate_supercell_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y
         start = 8
         for i in range(len(atom_type)):
             for j in range(atom_numbers[i]):
-                atom_position = file_body[start + j].split()
+                atom_position = poscar_data[start + j].split()
                 x, y, z = map(float, atom_position[0:3])
                 outfile.write("{:3.1f} {:16.12f} {:16.12f} {:16.12f}\n".format(atom_index[i], x, y, z))
             start = start + atom_numbers[i]
@@ -100,7 +108,7 @@ def generate_supercell_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y
         outfile.write("&soc 0.0 0.0 /\n")
         outfile.write("&kpt div1={:d} div2={:d} div3={:d} /\n".format(k1, k2, k3))
 
-def generate_film_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                          total_atom_number, atom_type, atom_numbers, atom_index, k1, k2):
     with open("inp_film", "w") as outfile:
         outfile.write("{:s}\n".format(title))
@@ -112,13 +120,13 @@ def generate_film_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y, a2z
         outfile.write("1.889726125 1.889726125 1.889726125\n")
         outfile.write("{:3d}\n".format(total_atom_number))
 
-        z_values = [float(line.split()[2]) for line in file_body[8:8 + total_atom_number]]
+        z_values = [float(line.split()[2]) for line in poscar_data[8:8 + total_atom_number]]
         arv_z = (max(z_values) + min(z_values)) / 2
 
         start = 8
         for i in range(len(atom_type)):
             for j in range(atom_numbers[i]):
-                atom_position = file_body[start + j].split()
+                atom_position = poscar_data[start + j].split()
                 x, y, z = map(float, atom_position[0:3])
                 direct2car_z = (z - arv_z) * a3z * 1.889726125
                 outfile.write("{:3.1f}{:16.12f}{:16.12f}{:16.12f}\n".format(atom_index[i], x, y, direct2car_z))
@@ -126,6 +134,13 @@ def generate_film_input(file_body, filename, title, a1x, a1y, a1z, a2x, a2y, a2z
         outfile.write("\n")
         outfile.write("&soc 0.0 0.0 /\n")
         outfile.write("&kpt div1={:d} div2={:d} div3=1 /\n".format(k1, k2))
+
+def process_cif_files(folder_path):
+    # Iterate through all files in the specified folder
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".cif"):
+            cif_filepath = os.path.join(folder_path, filename)
+            generate_inp_film(cif_filepath)
 
 if __name__ == "__main__":
     main()
