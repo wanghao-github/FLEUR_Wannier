@@ -5,7 +5,7 @@ import glob
 import subprocess
 # 获取 "1.cif" 文件夹中所有的 CIF 文件
 cif_files = glob.glob('1.cif_struc/*.cif')
-
+current_working_directory = os.getcwd()
 # 创建目标文件夹 "2.inp_films"（如果不存在）
 output_folder = '../2.inp_struc'
 os.makedirs(output_folder, exist_ok=True)
@@ -30,6 +30,13 @@ for cif_file in cif_files:
     subprocess.run(['python', 'contcar2inpfilm.py', 'POSCAR',  destination_folder])
     
     inp_sup_path = os.path.join(destination_folder, 'inp_sup')
+    
+    os.chdir(destination_folder)
+
     # 使用 inpgen 命令
-    subprocess.run(['inpgen', '-f', inp_sup_path])
+    subprocess.run(['inpgen', '-f', 'inp_sup'])
+
+    # 切换回原始工作目录
+    os.chdir(current_working_directory)
+
 print(f"{len(cif_files)} files processed.")
