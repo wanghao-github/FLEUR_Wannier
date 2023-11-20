@@ -122,7 +122,7 @@ def generate_supercell_input(poscar_data, filename, a1x, a1y, a1z, a2x, a2y, a2z
         outfile.write("&soc 0.0 0.0 /\n")
         outfile.write("&kpt div1={:d} div2={:d} div3={:d} /\n".format(k1, k2, k3))
 
-def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+def generate_film_input(poscar_data, filename, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                          total_atom_number, atom_type, atom_numbers, atom_index, k1, k2,output_folder):
     inp_file_path = os.path.join(output_folder, 'inp_film')
     print(f"Saving inp to: {inp_file_path}")
