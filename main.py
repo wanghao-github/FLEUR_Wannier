@@ -117,6 +117,9 @@ for cif_file in cif_files:
         shutil.copy2(initial_subjob_path, './')
     else:
         print(f"Error: {initial_subjob_path} is not a file.")
+        
+    print("Current working directory:", os.getcwd())
+    print("Subjob path:", initial_subjob_path)
 
     subprocess.run(['sbatch', 'subjob_2022'])
     # 切换回原始工作目录
