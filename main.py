@@ -6,6 +6,7 @@ import subprocess
 # 获取 "1.cif" 文件夹中所有的 CIF 文件
 cif_files = glob.glob('1.cif_struc/*.cif')
 current_working_directory = os.getcwd()
+print(current_working_directory)
 # 创建目标文件夹 "2.inp_films"（如果不存在）
 output_folder = '../2.inp_struc'
 os.makedirs(output_folder, exist_ok=True)
@@ -32,7 +33,7 @@ for cif_file in cif_files:
     inp_sup_path = os.path.join(destination_folder, 'inp_sup')
     
     os.chdir(destination_folder)
-
+    print(current_working_directory)
     # 使用 inpgen 命令
     subprocess.run(['inpgen', '-f', 'inp_sup'])
 
