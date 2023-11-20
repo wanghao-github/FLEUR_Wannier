@@ -154,3 +154,5 @@ def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a
 #             cif_filepath = os.path.join(folder_path, filename)
 #             generate_inp_film(cif_filepath)
 
+if __name__ == "__main__":
+    main()
