@@ -11922,6 +11922,50 @@ SymOpsHall = {
     }
     
             
+# if __name__ == '__main__':
+#     import sys
+#     args = sys.argv
+#     if len(args) == 1:
+#         print("usage: cif2pos.py ciffile [title]")
+#         exit(0)
+#     filename = args[1]
+#     if len(args) >=3:
+#         title = args[2]
+#     else:
+#         title = 'cif2pos.py'
+
+#     #version()
+#     cif = readfile(filename)
+#     s = symmetry(cif)
+#     a,labels = atominfo(cif)
+
+#     l =  lattice(cif)
+#     order = ord(a,labels)
+#     # order = get_element_order(a,labels)
+#     #print(a)
+#     (p, t) = p1atom(order, a, s[0], s[1],labels)
+#     #print(p)
+#     wPOSCAR(title, l, t, p,order)
+
+#     #print('>'*14)
+#     #print('POSCAR has been generated! Bye.')
+
+# cif2pos.py
+
+def process_cif_file(filename, title='cif2pos.py'):
+    # version()
+    cif = readfile(filename)
+    s = symmetry(cif)
+    a, labels = atominfo(cif)
+
+    l = lattice(cif)
+    order = ord(a, labels)
+    # order = get_element_order(a, labels)
+    # print(a)
+    (p, t) = p1atom(order, a, s[0], s[1], labels)
+    # print(p)
+    wPOSCAR(title, l, t, p, order)
+
 if __name__ == '__main__':
     import sys
     args = sys.argv
@@ -11929,24 +11973,9 @@ if __name__ == '__main__':
         print("usage: cif2pos.py ciffile [title]")
         exit(0)
     filename = args[1]
-    if len(args) >=3:
+    if len(args) >= 3:
         title = args[2]
     else:
         title = 'cif2pos.py'
 
-    #version()
-    cif = readfile(filename)
-    s = symmetry(cif)
-    a,labels = atominfo(cif)
-
-    l =  lattice(cif)
-    order = ord(a,labels)
-    # order = get_element_order(a,labels)
-    #print(a)
-    (p, t) = p1atom(order, a, s[0], s[1],labels)
-    #print(p)
-    wPOSCAR(title, l, t, p,order)
-
-    #print('>'*14)
-    #print('POSCAR has been generated! Bye.')
-
+    process_cif_file(filename, title)
