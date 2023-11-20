@@ -1,7 +1,7 @@
 import os
 import shutil
-import subprocess
 import glob
+import cif2pos  # Assuming cif2pos.py is in the same directory
 
 # 获取 "1.cif" 文件夹中所有的 CIF 文件
 cif_files = glob.glob('1.cif_struc/*.cif')
@@ -25,27 +25,7 @@ for cif_file in cif_files:
     # 使用 shutil.copy2 进行复制，保留文件元数据
     shutil.copy2(cif_file, destination_file)
 
-print(f"{len(cif_files)} files copied to {output_folder}.")
+    # 在主程序中调用 cif2pos 模块
+    cif2pos.main()
 
-# 获取所有的 "2.inp_films" 子文件夹
-structure_folders = [os.path.join(output_folder, folder) for folder in os.listdir(output_folder) if os.path.isdir(os.path.join(output_folder, folder))]
-
-# 遍历每个子文件夹，并在其中执行 cif2pos.py 脚本
-for structure_folder in structure_folders:
-    # 构造 cif2pos.py 脚本的路径
-    script_path = os.path.abspath('cif2pos.py')
-
-    # 获取不带扩展名的文件名
-    file_name = os.path.basename(structure_folder)
-
-    # 获取子文件夹中的 CIF 文件名
-    cif_file = os.path.join(structure_folder, f"{file_name}.cif")
-
-
-    process = subprocess.Popen(['python', script_path, cif_file], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = process.communicate()
-    print("Script output:", output.decode('utf-8'))
-    print("Script errors:", error.decode('utf-8'))
-
-
-print("Scripts executed in all 2.inp_films folders.")
+print(f"{len(cif_files)} files processed.")
