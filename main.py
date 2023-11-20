@@ -114,6 +114,8 @@ for cif_file in cif_files:
     
     initial_subjob_path = os.path.join(current_working_directory, 'subjob_2022')
     if os.path.isfile(initial_subjob_path):
+        print("initial_subjob_path is ", initial_subjob_path)
+        print("destination_folder is ", destination_folder)
         shutil.copy2(initial_subjob_path, destination_folder)
     else:
         print(f"Error: {initial_subjob_path} is not a file.")
