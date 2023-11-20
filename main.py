@@ -3,6 +3,48 @@ import shutil
 import glob
 # import cif2pos  # Assuming cif2pos.py is in the same directory
 import subprocess
+import xml.etree.ElementTree as ET
+
+def update_itmax_attribute(xml_file_path, new_value):
+    """
+    Update the 'itmax' attribute in the 'scfLoop' element of an XML file.
+
+    Parameters:
+        - xml_file_path (str): The path to the XML file.
+        - new_value (str): The new value for the 'itmax' attribute.
+
+    Returns:
+        - bool: True if the update is successful, False otherwise.
+    """
+    if os.path.exists(xml_file_path):
+        # Parse the XML file
+        tree = ET.parse(xml_file_path)
+        root = tree.getroot()
+
+        # Find the scfLoop element
+        scf_loop_element = root.find(".//scfLoop")
+
+        # Update the itmax attribute
+        if scf_loop_element is not None:
+            scf_loop_element.set("itmax", new_value)
+
+            # Save the modified XML back to the file
+            tree.write(xml_file_path)
+            print(f"{xml_file_path} updated successfully.")
+            return True
+        else:
+            print("Error: 'scfLoop' element not found in the XML file.")
+    else:
+        print(f"Error: {xml_file_path} not found.")
+        return False
+
+# Example usage:
+inp_xml_file = "inp.xml"
+new_loop_number = "80"
+
+
+
+
 # 获取 "1.cif" 文件夹中所有的 CIF 文件
 cif_files = glob.glob('1.cif_struc/*.cif')
 current_working_directory = os.getcwd()
@@ -41,8 +83,7 @@ for cif_file in cif_files:
 
     inp_xml_file = "inp.xml"
     new_loop_number = "80"
-    subprocess.run(['awk', f'/<scfLoop itmax="15"/{{gsub(/15/, "{new_loop_number}")}}1', inp_xml_file], check=True)
-
+    update_itmax_attribute(inp_xml_file, new_loop_number)
     # 切换回原始工作目录
     os.chdir(current_working_directory)
 
