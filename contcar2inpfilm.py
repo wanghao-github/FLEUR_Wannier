@@ -50,7 +50,7 @@ def main():
     filename = args.filename
     # title = args.title
     output_folder = args.output_folder
-
+    print(output_folder)
     # n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
     n_type = 1
     poscar_data = read_contcar(filename)
