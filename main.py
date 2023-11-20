@@ -112,11 +112,11 @@ for cif_file in cif_files:
     update_itmax_attribute(inp_xml_file, new_loop_number)
     # shutil.copy2(os.path.join(current_working_directory, 'subjob_2022'), os.path.join(destination_folder, 'subjob_2022'))
     
-    subjob_path = os.path.join(current_working_directory, 'subjob_2022')
-    if os.path.isfile(subjob_path):
-        shutil.copy2(subjob_path, os.path.join(destination_folder, 'subjob_2022'))
+    initial_subjob_path = os.path.join(current_working_directory, 'subjob_2022')
+    if os.path.isfile(initial_subjob_path):
+        shutil.copy2(initial_subjob_path, destination_folder)
     else:
-        print(f"Error: {subjob_path} is not a file.")
+        print(f"Error: {initial_subjob_path} is not a file.")
 
     # subprocess.run(['sbatch', 'subjob_2022'])
     # 切换回原始工作目录
