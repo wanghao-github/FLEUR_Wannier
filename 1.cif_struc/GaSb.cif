@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 #$Date: 2010-06-10 15:11:07 +0000 (Thu, 10 Jun 2010) $
 #$Revision: 1210 $
-#$URL: svn://cod.ibt.lt/cod/cif/9/9008856.cif $
+#$URL: svn://cod.ibt.lt/cod/cif/9/9008847.cif $
 #------------------------------------------------------------------------------
 #
 # This file is available in the Crystallography Open Database (COD),
@@ -16,7 +16,7 @@
 # proper attribution is given to the journal article from which the
 # data were obtained.
 #
-data_9008856
+data_9008847
 loop_
 _publ_author_name
 'Wyckoff, R. W. G.'
@@ -30,22 +30,21 @@ _journal_page_first              85
 _journal_page_last               237
 _journal_volume                  1
 _journal_year                    1963
-_chemical_formula_sum            'C Si'
-_chemical_name_mineral           SiC
+_chemical_formula_sum            'Ga Sb'
+_chemical_name_mineral           GaSb
 _space_group_IT_number           216
 _symmetry_space_group_name_Hall  'F -4 2 3'
 _symmetry_space_group_name_H-M   'F -4 3 m'
 _cell_angle_alpha                90
 _cell_angle_beta                 90
 _cell_angle_gamma                90
-_cell_length_a                   4.348
-_cell_length_b                   4.348
-_cell_length_c                   4.348
-_cell_volume                     82.199
-_exptl_crystal_density_diffrn    3.240
-_[local]_cod_chemical_formula_sum_orig 'Si C'
-_cod_database_code               9008856
-_amcsd_database_code             AMCSD#0011187
+_cell_length_a                   6.118
+_cell_length_b                   6.118
+_cell_length_c                   6.118
+_cell_volume                     228.996
+_exptl_crystal_density_diffrn    5.554
+_cod_database_code               9008847
+_amcsd_database_code             AMCSD#0011178
 loop_
 _symmetry_equiv_pos_as_xyz
 x,y,z
@@ -149,5 +148,5 @@ _atom_site_label
 _atom_site_fract_x
 _atom_site_fract_y
 _atom_site_fract_z
-Si 0.00000 0.00000 0.00000
-C 0.25000 0.25000 0.25000
+Ga 0.00000 0.00000 0.00000
+Sb 0.25000 0.25000 0.25000
