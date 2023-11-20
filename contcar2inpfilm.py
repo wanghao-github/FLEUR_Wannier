@@ -99,6 +99,10 @@ output_filename2 = "inp_film"
 
 def generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                              total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3, output_folder):
+    import sys
+    args = sys.argv
+    filename = args[1]
+    output_folder = args[2]
     inp_file_path = os.path.join(output_folder, 'inp_sup')
     print(f"Saving inp to: {inp_file_path}")
     with open(inp_file_path, 'w') as outfile:
