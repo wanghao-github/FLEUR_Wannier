@@ -48,8 +48,8 @@ def main():
     args = parse_command_line_args()
     filename = args.filename
     title = args.title
-    n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
-
+    # n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
+    n_type = 1
     poscar_data = read_contcar(filename)
     scale_factor = poscar_data[1]
     lattice_parameters = [list(map(float, line.split())) for line in poscar_data[2:5]]
@@ -135,12 +135,12 @@ def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a
         outfile.write("&soc 0.0 0.0 /\n")
         outfile.write("&kpt div1={:d} div2={:d} div3=1 /\n".format(k1, k2))
 
-def process_cif_files(folder_path):
-    # Iterate through all files in the specified folder
-    for filename in os.listdir(folder_path):
-        if filename.endswith(".cif"):
-            cif_filepath = os.path.join(folder_path, filename)
-            generate_inp_film(cif_filepath)
+# def process_cif_files(folder_path):
+#     # Iterate through all files in the specified folder
+#     for filename in os.listdir(folder_path):
+#         if filename.endswith(".cif"):
+#             cif_filepath = os.path.join(folder_path, filename)
+#             generate_inp_film(cif_filepath)
 
 if __name__ == "__main__":
     main()
