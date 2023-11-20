@@ -1,9 +1,37 @@
 import os
 import shutil
 import glob
-# import cif2pos  # Assuming cif2pos.py is in the same directory
 import subprocess
 import xml.etree.ElementTree as ET
+import time
+
+def check_completion_periodically(interval=30, keyword="Run finished successfully", file_pattern="mpi-err.*"):
+    while True:
+        result = check_latest_task_completion(keyword, file_pattern)
+        if result:
+            print("Latest task completed successfully.")
+            break  # 可以根据需要终止循环
+        else:
+            print("Latest task may not have completed successfully. Checking again in {} seconds.".format(interval))
+            time.sleep(interval)
+
+def check_latest_task_completion(keyword, file_pattern):
+    # 获取所有匹配的 mpi-err 文件
+    mpi_err_files = glob.glob(file_pattern)
+    
+    if mpi_err_files:
+        # 获取最新的 mpi-err 文件
+        latest_mpi_err = max(mpi_err_files, key=os.path.getctime)
+
+        # 读取文件内容并检查关键字
+        with open(latest_mpi_err, 'r') as file:
+            content = file.read()
+            return keyword in content
+
+    return False
+
+# 示例用法
+check_completion_periodically()
 
 def update_itmax_attribute(xml_file_path, new_value):
     """
@@ -41,9 +69,6 @@ def update_itmax_attribute(xml_file_path, new_value):
 # Example usage:
 inp_xml_file = "inp.xml"
 new_loop_number = "80"
-
-
-
 
 # 获取 "1.cif" 文件夹中所有的 CIF 文件
 cif_files = glob.glob('1.cif_struc/*.cif')
@@ -84,6 +109,8 @@ for cif_file in cif_files:
     inp_xml_file = "inp.xml"
     new_loop_number = "80"
     update_itmax_attribute(inp_xml_file, new_loop_number)
+    shutil.copy2(os.path.join(current_working_directory, 'subjob_2022'), os.path.join(destination_folder, 'subjob_2022'))
+    subprocess.run(['sbatch', 'subjob_2022'])
     # 切换回原始工作目录
     os.chdir(current_working_directory)
 
