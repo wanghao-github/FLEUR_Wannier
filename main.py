@@ -41,11 +41,11 @@ for structure_folder in structure_folders:
     # 获取子文件夹中的 CIF 文件名
     cif_file = os.path.join(structure_folder, f"{file_name}.cif")
 
-    # 使用 subprocess.run 简化代码
-    result = subprocess.run(['python', script_path, cif_file], capture_output=True, text=True)
 
-    if result.returncode != 0:
-        print(f"Error: Script execution failed for folder {structure_folder}")
-        print("Error output:", result.stderr)
+    process = subprocess.Popen(['python', script_path, cif_file], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+    print("Script output:", output.decode('utf-8'))
+    print("Script errors:", error.decode('utf-8'))
+
 
 print("Scripts executed in all 2.inp_films folders.")
