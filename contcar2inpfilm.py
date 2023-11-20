@@ -97,7 +97,7 @@ def generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a
                              total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3, output_folder):
     inp_file_path = os.path.join(output_folder, 'inp_sup')
     print(f"Saving inp to: {inp_file_path}")
-    with open("inp_file_path", "w") as outfile:
+    with open(inp_file_path, "w") as outfile:
         outfile.write("generate by hao \n")
         outfile.write("&input film=F, cartesian=F /\n")
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a1x, a1y, a1z))
@@ -122,7 +122,7 @@ def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a
                          total_atom_number, atom_type, atom_numbers, atom_index, k1, k2,output_folder):
     inp_file_path = os.path.join(output_folder, 'inp_film')
     print(f"Saving inp to: {inp_file_path}")
-    with open("inp_file_path", "w") as outfile:
+    with open(inp_file_path, "w") as outfile:
         outfile.write("generate by hao \n")
         outfile.write("&input film=T, symor=F, cartesian=F /\n")
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a1x, a1y, a1z))
