@@ -14,7 +14,7 @@ print(cif_files)
 for cif_file in cif_files:
     # 获取不带扩展名的文件名
     file_name = os.path.splitext(os.path.basename(cif_file))[0]
-
+    print(file_name)
     # 构造目标子文件夹路径
     destination_folder = os.path.join(output_folder, file_name)
     os.makedirs(destination_folder, exist_ok=True)
@@ -26,5 +26,5 @@ for cif_file in cif_files:
     shutil.copy2(cif_file, destination_file)
 
     # 在主程序中调用 cif2pos 模块
-    subprocess.run(['python', 'cif2pos.py', cif_file, 'MyTitle'])
+    subprocess.run(['python', 'cif2pos.py', file_name'.cif', 'MyTitle'])
 print(f"{len(cif_files)} files processed.")
