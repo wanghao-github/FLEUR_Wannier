@@ -11,6 +11,7 @@ import math as m
 import numpy as np
 import re
 from fractions import Fraction as frac
+import os
 
 def version():
     print('cif -> POSCAR')
@@ -342,9 +343,11 @@ def ord(ea,labels):
     print(order)
     return order
 
-def wPOSCAR(title, lat, type, pos,order):
+def wPOSCAR(title, lat, type, pos,order,output_folder):
+    poscar_file_path = os.path.join(output_folder, 'POSCAR')
+    print(f"Saving POSCAR to: {poscar_file_path}")
     try:
-        f = open('POSCAR', 'w')
+        f = open(poscar_file_path, 'w')
     except:
         print('ERROR: Cannot open file POSCAR')
         exit(0)
@@ -11929,6 +11932,8 @@ if __name__ == '__main__':
         print("usage: cif2pos.py ciffile [title]")
         exit(0)
     filename = args[1]
+    output_folder = args[2]
+        
     if len(args) >=3:
         title = args[2]
     else:
@@ -11945,7 +11950,7 @@ if __name__ == '__main__':
     #print(a)
     (p, t) = p1atom(order, a, s[0], s[1],labels)
     #print(p)
-    wPOSCAR(title, l, t, p,order)
+    wPOSCAR(title, l, t, p,order,output_folder)
 
     #print('>'*14)
     #print('POSCAR has been generated! Bye.')
