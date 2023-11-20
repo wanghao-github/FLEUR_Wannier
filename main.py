@@ -31,6 +31,9 @@ print(f"{len(cif_files)} files copied to {output_folder}.")
 structure_folders = [os.path.join('2.inp_films', folder) for folder in os.listdir('2.inp_films') if os.path.isdir(os.path.join('2.inp_films', folder))]
 
 # 遍历每个子文件夹，并在其中执行 cif2pos.py 脚本
+import os
+import subprocess
+
 for structure_folder in structure_folders:
     # 构造 cif2pos.py 脚本的路径
     script_path = os.path.abspath('cif2pos.py')
@@ -43,11 +46,15 @@ for structure_folder in structure_folders:
 
     # 启动一个进程并执行脚本
     process = subprocess.Popen(['python', script_path, cif_file], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    process.communicate(input=b'\n')  # Send an Enter key press to standard input
 
-    # 等待进程结束
+    # 等待进程执行完成
     process.wait()
 
+    # 检查返回码，如果不为 0，表示执行失败
+    if process.returncode != 0:
+        print(f"Error: Script execution failed for folder {structure_folder}")
+
 print("Scripts executed in all 2.inp_films folders.")
+
 
 
