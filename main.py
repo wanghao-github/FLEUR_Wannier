@@ -31,7 +31,7 @@ def check_latest_task_completion(keyword, file_pattern):
     return False
 
 # 示例用法
-check_completion_periodically()
+# check_completion_periodically()
 
 def update_itmax_attribute(xml_file_path, new_value):
     """
