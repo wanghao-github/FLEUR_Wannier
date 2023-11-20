@@ -29,4 +29,7 @@ for cif_file in cif_files:
     subprocess.run(['python', 'cif2pos.py', destination_file, destination_folder])
     subprocess.run(['python', 'contcar2inpfilm.py', 'POSCAR',  destination_folder])
     
+    inp_sup_path = os.path.join(destination_folder, 'inp_sup')
+    # 使用 inpgen 命令
+    subprocess.run(['inpgen', '-f', inp_sup_path])
 print(f"{len(cif_files)} files processed.")
