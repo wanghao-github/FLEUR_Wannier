@@ -25,10 +25,10 @@ for cif_file in cif_files:
     print(destination_file)
     # 使用 shutil.copy2 进行复制，保留文件元数据
     shutil.copy2(cif_file, destination_file)
-
+    destination_POSCAR = os.path.join(destination_folder, 'POSCAR')
     # 在主程序中调用 cif2pos 模块
     subprocess.run(['python', 'cif2pos.py', destination_file, destination_folder])
-    subprocess.run(['python', 'contcar2inpfilm.py', 'POSCAR',  destination_folder])
+    subprocess.run(['python', 'contcar2inpfilm.py', destination_POSCAR , destination_folder])
     
     inp_sup_path = os.path.join(destination_folder, 'inp_sup')
     
