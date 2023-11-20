@@ -342,22 +342,6 @@ def ord(ea,labels):
     print(order)
     return order
 
-def ord(ea,labels):
-    order=[ea[k][0] for k in ea]
-    # import sys
-    # if sys.version_info[0]==2: 
-    #     order=raw_input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
-    # else:
-    #     order=input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
-    # if len(order) == 0:
-    #     #print 'WARNING: '
-    #     o1 = []
-    #     for k in ea:
-    #         o1.append(ea[k][0])
-    #     o2 = set(o1)
-    #     order = [item for item in o2]
-    return order
-
 def wPOSCAR(title, lat, type, pos,order):
     try:
         f = open('POSCAR', 'w')
