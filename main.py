@@ -9,7 +9,7 @@ cif_files = glob.glob('1.cif_struc/*.cif')
 # 创建目标文件夹 "2.inp_films"（如果不存在）
 output_folder = '2.inp_films'
 os.makedirs(output_folder, exist_ok=True)
-
+print(cif_files)
 # 遍历每个 CIF 文件，创建同名子文件夹并将 CIF 文件复制到相应的子文件夹中
 for cif_file in cif_files:
     # 获取不带扩展名的文件名
