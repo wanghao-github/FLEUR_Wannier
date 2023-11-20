@@ -36,9 +36,6 @@ for cif_file in cif_files:
     print(current_working_directory)
     # 使用 inpgen 命令
     subprocess.run(['inpgen', '-f', 'inp_sup'])
-    subprocess.run(['inpgen', '-f', 'inp_sup'])
-    
-    import subprocess
 
     # Specify the XML file and the new value
     inp_xml_file = "inp.xml"
