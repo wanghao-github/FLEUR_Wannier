@@ -42,15 +42,15 @@ def parse_command_line_args():
     parser = argparse.ArgumentParser(description="Generate input files for a specific application.")
     parser.add_argument("filename", help="Input CONTCAR filename")
     parser.add_argument("title", nargs="?", default="inp_generator", help="Title for the output files")
+    parser.add_argument("output_folder", help="Output folder for the generated files")
     return parser.parse_args()
 
 def main():
-    import sys
-    args = sys.argv
     args = parse_command_line_args()
     filename = args.filename
     title = args.title
-    output_folder = args[2] 
+    output_folder = args.output_folder
+
     # n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
     n_type = 1
     poscar_data = read_contcar(filename)
