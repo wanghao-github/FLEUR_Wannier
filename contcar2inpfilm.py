@@ -10,7 +10,7 @@ command_gen_poscar = "ls -l"
 bohr_in_ang = 0.52917721067
 ang_in_bohr = 1.88972612546
 
-kpoint_dense = 45
+kpoint_dense = 30
 
 ele_list = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K',
             'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb',

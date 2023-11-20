@@ -36,6 +36,14 @@ for cif_file in cif_files:
     print(current_working_directory)
     # 使用 inpgen 命令
     subprocess.run(['inpgen', '-f', 'inp_sup'])
+    subprocess.run(['inpgen', '-f', 'inp_sup'])
+    
+    import subprocess
+
+    # Specify the XML file and the new value
+    inp_xml_file = "inp.xml"
+    new_loop_number = "80"
+    subprocess.run(['awk', f'/<scfLoop itmax="15"/{{gsub(/15/, "{new_loop_number}")}}1', inp_xml_file, '>', 'temp.xml', '&&', 'mv', 'temp.xml', inp_xml_file], shell=True)
 
     # 切换回原始工作目录
     os.chdir(current_working_directory)
