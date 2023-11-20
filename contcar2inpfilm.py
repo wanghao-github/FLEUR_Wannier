@@ -56,7 +56,7 @@ def main():
     output_folder = args[2]
     print(output_folder)
     # n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
-    n_type = 2
+    n_type = 1
     poscar_data = read_contcar(filename)
     scale_factor = poscar_data[1]
     lattice_parameters = [list(map(float, line.split())) for line in poscar_data[2:5]]
@@ -119,7 +119,7 @@ def generate_supercell_input(poscar_data, filename, a1x, a1y, a1z, a2x, a2y, a2z
                 outfile.write("{:3.1f} {:16.12f} {:16.12f} {:16.12f}\n".format(atom_index[i], x, y, z))
             start = start + atom_numbers[i]
         outfile.write("\n")
-        outfile.write("&soc 0.0 0.0 /\n")
+        # outfile.write("&soc 0.0 0.0 /\n")
         outfile.write("&kpt div1={:d} div2={:d} div3={:d} /\n".format(k1, k2, k3))
 
 def generate_film_input(poscar_data, filename, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
@@ -148,7 +148,7 @@ def generate_film_input(poscar_data, filename, a1x, a1y, a1z, a2x, a2y, a2z, a3x
                 outfile.write("{:3.1f}{:16.12f}{:16.12f}{:16.12f}\n".format(atom_index[i], x, y, direct2car_z))
             start = start + atom_numbers[i]
         outfile.write("\n")
-        outfile.write("&soc 0.0 0.0 /\n")
+        # outfile.write("&soc 0.0 0.0 /\n")
         outfile.write("&kpt div1={:d} div2={:d} div3=1 /\n".format(k1, k2))
 
 # def process_cif_files(folder_path):
