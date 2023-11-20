@@ -118,7 +118,7 @@ for cif_file in cif_files:
     else:
         print(f"Error: {initial_subjob_path} is not a file.")
 
-    # subprocess.run(['sbatch', 'subjob_2022'])
+    subprocess.run(['sbatch', 'subjob_2022'])
     # 切换回原始工作目录
     os.chdir(current_working_directory)
 
