@@ -327,18 +327,19 @@ def p1atom(order, ea, symm, trans,labels):
 
 def ord(ea,labels):
     order=[ea[k][0] for k in ea]
-    import sys
-    if sys.version_info[0]==2: 
-        order=raw_input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
-    else:
-        order=input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
-    if len(order) == 0:
-        #print 'WARNING: '
-        o1 = []
-        for k in ea:
-            o1.append(ea[k][0])
-        o2 = set(o1)
-        order = [item for item in o2]
+    # import sys
+    # if sys.version_info[0]==2: 
+    #     order=raw_input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
+    # else:
+    #     order=input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
+    # if len(order) == 0:
+    #     #print 'WARNING: '
+    #     o1 = []
+    #     for k in ea:
+    #         o1.append(ea[k][0])
+    #     o2 = set(o1)
+    #     order = [item for item in o2]
+    print(order)
     return order
 
 def get_element_order(ea, labels):
