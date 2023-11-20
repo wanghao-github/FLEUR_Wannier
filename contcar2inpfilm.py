@@ -45,9 +45,12 @@ def parse_command_line_args():
     return parser.parse_args()
 
 def main():
+    import sys
+    args = sys.argv
     args = parse_command_line_args()
     filename = args.filename
     title = args.title
+    output_folder = args[2] 
     # n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
     n_type = 1
     poscar_data = read_contcar(filename)
@@ -77,17 +80,19 @@ def main():
 
     if n_type == 1:
         generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
-                                 total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3)
+                                 total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3,output_folder)
     else:
         generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
-                             total_atom_number, atom_type, atom_numbers, atom_index, k1, k2)
+                             total_atom_number, atom_type, atom_numbers, atom_index, k1, k2,output_folder)
 
 output_filename1 = "inp_sup"
 output_filename2 = "inp_film"
 
 def generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
-                             total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3):
-    with open("inp_sup", "w") as outfile:
+                             total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3, output_folder):
+    inp_file_path = os.path.join(output_folder, 'inp_sup')
+    print(f"Saving inp to: {inp_file_path}")
+    with open("inp_file_path", "w") as outfile:
         outfile.write("{:s}\n".format(filename))
         outfile.write("&input film=F, cartesian=F /\n")
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a1x, a1y, a1z))
@@ -109,8 +114,10 @@ def generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a
         outfile.write("&kpt div1={:d} div2={:d} div3={:d} /\n".format(k1, k2, k3))
 
 def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
-                         total_atom_number, atom_type, atom_numbers, atom_index, k1, k2):
-    with open("inp_film", "w") as outfile:
+                         total_atom_number, atom_type, atom_numbers, atom_index, k1, k2,output_folder):
+    inp_file_path = os.path.join(output_folder, 'inp_sup')
+    print(f"Saving inp to: {inp_file_path}")
+    with open("inp_file_path", "w") as outfile:
         outfile.write("{:s}\n".format(title))
         outfile.write("&input film=T, symor=F, cartesian=F /\n")
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a1x, a1y, a1z))
@@ -142,5 +149,3 @@ def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a
 #             cif_filepath = os.path.join(folder_path, filename)
 #             generate_inp_film(cif_filepath)
 
-if __name__ == "__main__":
-    main()

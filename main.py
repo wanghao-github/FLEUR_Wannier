@@ -27,6 +27,6 @@ for cif_file in cif_files:
 
     # 在主程序中调用 cif2pos 模块
     subprocess.run(['python', 'cif2pos.py', destination_file, destination_folder])
-    subprocess.run(['python', 'contcar2inpfilm.py', 'POSCAR'])
+    subprocess.run(['python', 'contcar2inpfilm.py', 'POSCAR',destination_folder])
     
 print(f"{len(cif_files)} files processed.")
