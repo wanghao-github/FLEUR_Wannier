@@ -41,14 +41,14 @@ def get_atom_index(atom_type):
 def parse_command_line_args():
     parser = argparse.ArgumentParser(description="Generate input files for a specific application.")
     parser.add_argument("filename", help="Input CONTCAR filename")
-    parser.add_argument("title", nargs="?", default="inp_generator", help="Title for the output files")
+    # parser.add_argument("title", nargs="?", default="inp_generator", help="Title for the output files")
     parser.add_argument("output_folder", help="Output folder for the generated files")
     return parser.parse_args()
 
 def main():
     args = parse_command_line_args()
     filename = args.filename
-    title = args.title
+    # title = args.title
     output_folder = args.output_folder
 
     # n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
@@ -79,11 +79,16 @@ def main():
         print(f"Atom Name: {type}, Atom Number: {number}, Atom Index: {index}")
 
     if n_type == 1:
-        generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+        # generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+                                #  total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3,output_folder)
+        generate_supercell_input(poscar_data, filename, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                                  total_atom_number, atom_type, atom_numbers, atom_index, k1, k2, k3,output_folder)
     else:
-        generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+        generate_film_input(poscar_data, filename, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                              total_atom_number, atom_type, atom_numbers, atom_index, k1, k2,output_folder)
+
+        # generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
+        #                      total_atom_number, atom_type, atom_numbers, atom_index, k1, k2,output_folder)
 
 output_filename1 = "inp_sup"
 output_filename2 = "inp_film"
@@ -93,7 +98,7 @@ def generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a
     inp_file_path = os.path.join(output_folder, 'inp_sup')
     print(f"Saving inp to: {inp_file_path}")
     with open("inp_file_path", "w") as outfile:
-        outfile.write("{:s}\n".format(filename))
+        outfile.write("generate by hao \n")
         outfile.write("&input film=F, cartesian=F /\n")
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a1x, a1y, a1z))
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a2x, a2y, a2z))
@@ -115,10 +120,10 @@ def generate_supercell_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a
 
 def generate_film_input(poscar_data, filename, title, a1x, a1y, a1z, a2x, a2y, a2z, a3x, a3y, a3z,
                          total_atom_number, atom_type, atom_numbers, atom_index, k1, k2,output_folder):
-    inp_file_path = os.path.join(output_folder, 'inp_sup')
+    inp_file_path = os.path.join(output_folder, 'inp_film')
     print(f"Saving inp to: {inp_file_path}")
     with open("inp_file_path", "w") as outfile:
-        outfile.write("{:s}\n".format(title))
+        outfile.write("generate by hao \n")
         outfile.write("&input film=T, symor=F, cartesian=F /\n")
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a1x, a1y, a1z))
         outfile.write("{:16.12f}{:16.12f}{:16.12f}\n".format(a2x, a2y, a2z))
