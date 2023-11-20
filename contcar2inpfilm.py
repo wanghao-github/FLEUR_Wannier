@@ -56,7 +56,7 @@ def main():
     output_folder = args[2]
     print(output_folder)
     # n_type = int(input("Please input the type of the structure-1 for supercell, 2 for film:"))
-    n_type = 1
+    n_type = 2
     poscar_data = read_contcar(filename)
     scale_factor = poscar_data[1]
     lattice_parameters = [list(map(float, line.split())) for line in poscar_data[2:5]]
