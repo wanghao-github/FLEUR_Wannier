@@ -1,8 +1,8 @@
 import os
 import shutil
 import glob
-import cif2pos  # Assuming cif2pos.py is in the same directory
-
+# import cif2pos  # Assuming cif2pos.py is in the same directory
+import subprocess
 # 获取 "1.cif" 文件夹中所有的 CIF 文件
 cif_files = glob.glob('1.cif_struc/*.cif')
 
@@ -26,6 +26,5 @@ for cif_file in cif_files:
     shutil.copy2(cif_file, destination_file)
 
     # 在主程序中调用 cif2pos 模块
-    cif2pos.process_cif_file(destination_file)
-
+    subprocess.run(['python', 'cif2pos.py', cif_file, 'MyTitle'])
 print(f"{len(cif_files)} files processed.")
