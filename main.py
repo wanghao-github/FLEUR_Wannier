@@ -21,10 +21,10 @@ for cif_file in cif_files:
 
     # 构造目标文件路径
     destination_file = os.path.join(destination_folder, os.path.basename(cif_file))
-
+    print(destination_file)
     # 使用 shutil.copy2 进行复制，保留文件元数据
     shutil.copy2(cif_file, destination_file)
 
     # 在主程序中调用 cif2pos 模块
-    subprocess.run(['python', 'cif2pos.py', file_name, 'MyTitle'])
+    subprocess.run(['python', 'cif2pos.py', destination_file, 'MyTitle'])
 print(f"{len(cif_files)} files processed.")
