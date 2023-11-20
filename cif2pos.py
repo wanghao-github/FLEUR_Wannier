@@ -334,7 +334,6 @@ def ord(ea,labels):
     # else:
     #     order=input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
     # if len(order) == 0:
-
     o1 = []
     for k in ea:
         o1.append(ea[k][0])
