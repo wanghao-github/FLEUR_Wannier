@@ -114,9 +114,10 @@ for cif_file in cif_files:
     
     subjob_path = os.path.join(current_working_directory, 'subjob_2022')
     if os.path.isfile(subjob_path):
-        shutil.copy2(subjob_path, destination_folder)
+        shutil.copy2(subjob_path, os.path.join(destination_folder, 'subjob_2022'))
     else:
         print(f"Error: {subjob_path} is not a file.")
+
     # subprocess.run(['sbatch', 'subjob_2022'])
     # 切换回原始工作目录
     os.chdir(current_working_directory)
