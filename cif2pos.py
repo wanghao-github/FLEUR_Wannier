@@ -342,28 +342,20 @@ def ord(ea,labels):
     print(order)
     return order
 
-def get_element_order(ea, labels):
-    # 先设置默认值
-    default_order = list(set([ea[k][0] for k in ea]))
-
-    import sys
-    if sys.version_info[0] == 2:
-        order_input = raw_input("Please input the order of elements, or press Enter for default:\nExample: %r in this CIF\n" % (' '.join(default_order)))
-    else:
-        # 在 Python 3 中，使用 input 的默认值
-        order_input = input("Please input the order of elements, or press Enter for default:\nExample: %r in this CIF\n" % (' '.join(default_order)))
-
-    # 如果用户提供了输入，使用输入的值，否则使用默认值
-    order = order_input.split() if order_input.strip() else default_order
-
-    # 如果用户没有提供输入，使用类似的逻辑生成默认的 order
-    if not order_input.strip():
-        o1 = []
-        for k in ea:
-            o1.append(ea[k][0])
-        o2 = set(o1)
-        order = [item for item in o2]
-
+def ord(ea,labels):
+    order=[ea[k][0] for k in ea]
+    # import sys
+    # if sys.version_info[0]==2: 
+    #     order=raw_input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
+    # else:
+    #     order=input("Pleas input the order of element, `ENTER` for default!\nExample: %r in this CIF\n" %(' '.join(set(order)))).split()
+    # if len(order) == 0:
+    #     #print 'WARNING: '
+    #     o1 = []
+    #     for k in ea:
+    #         o1.append(ea[k][0])
+    #     o2 = set(o1)
+    #     order = [item for item in o2]
     return order
 
 def wPOSCAR(title, lat, type, pos,order):
@@ -11964,8 +11956,8 @@ if __name__ == '__main__':
     a,labels = atominfo(cif)
 
     l =  lattice(cif)
-    #order = ord(a,labels)
-    order = get_element_order(a,labels)
+    order = ord(a,labels)
+    # order = get_element_order(a,labels)
     #print(a)
     (p, t) = p1atom(order, a, s[0], s[1],labels)
     #print(p)
